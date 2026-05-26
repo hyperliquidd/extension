@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hyperliquid - Productivity Chrome Extension</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#07101d;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+  width:90%;
+  max-width:1180px;
+  margin:auto;
+}
+
+/* ================= HEADER ================= */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(5,12,22,.88);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.navbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 0;
+}
+
+.logo{
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.logo span{
+  color:#38bdf8;
+}
+
+.menu{
+  display:flex;
+  gap:30px;
+}
+
+.menu a{
+  color:#dbe7ff;
+  text-decoration:none;
+  font-weight:500;
+  transition:.3s;
+}
+
+.menu a:hover{
+  color:#38bdf8;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  padding:100px 0;
+  position:relative;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+}
+
+.hero h1{
+  font-size:66px;
+  line-height:1.08;
+  margin-bottom:22px;
+}
+
+.hero h1 span{
+  background:linear-gradient(90deg,#38bdf8,#2563eb);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+  color:#94a3b8;
+  font-size:18px;
+  line-height:1.9;
+  margin-bottom:35px;
+}
+
+.hero-btns{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-block;
+  padding:16px 30px;
+  border-radius:16px;
+  text-decoration:none;
+  font-weight:700;
+  transition:.3s;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,#2563eb,#06b6d4);
+  color:#fff;
+  box-shadow:0 18px 35px rgba(37,99,235,.35);
+}
+
+.btn-primary:hover{
+  transform:translateY(-3px);
+}
+
+.btn-outline{
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff;
+}
+
+.dashboard{
+  background:linear-gradient(180deg,#111b2f,#0b1424);
+  border-radius:30px;
+  padding:28px;
+  border:1px solid rgba(255,255,255,.05);
+  box-shadow:0 30px 60px rgba(0,0,0,.45);
+}
+
+.widget{
+  background:#101827;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:16px;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.widget h3{
+  margin-bottom:8px;
+  font-size:18px;
+}
+
+.widget p{
+  color:#94a3b8;
+  font-size:14px;
+  line-height:1.7;
+}
+
+/* ================= FEATURES ================= */
+
+.features{
+  padding:90px 0;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:60px;
+}
+
+.section-title h2{
+  font-size:46px;
+  margin-bottom:15px;
+}
+
+.section-title p{
+  color:#94a3b8;
+  max-width:720px;
+  margin:auto;
+  line-height:1.8;
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
+
+.feature-card{
+  background:linear-gradient(180deg,#121b2e,#0d1423);
+  border-radius:28px;
+  padding:32px;
+  border:1px solid rgba(255,255,255,.05);
+  transition:.3s;
+}
+
+.feature-card:hover{
+  transform:translateY(-7px);
+  border-color:#38bdf8;
+}
+
+.icon{
+  width:70px;
+  height:70px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  background:linear-gradient(135deg,#2563eb,#06b6d4);
+  margin-bottom:22px;
+}
+
+.feature-card h3{
+  margin-bottom:15px;
+  font-size:22px;
+}
+
+.feature-card p{
+  color:#94a3b8;
+  line-height:1.9;
+}
+
+/* ================= ABOUT ================= */
+
+.about{
+  padding:90px 0;
+}
+
+.about-box{
+  background:linear-gradient(180deg,#121b2e,#0d1423);
+  border-radius:34px;
+  padding:50px;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.about-box h2{
+  font-size:44px;
+  margin-bottom:20px;
+}
+
+.about-box p{
+  color:#cbd5e1;
+  line-height:2;
+  font-size:17px;
+}
+
+/* ================= PRIVACY ================= */
+
+.privacy{
+  padding:90px 0;
+}
+
+.privacy-box{
+  background:linear-gradient(180deg,#121b2e,#0d1423);
+  border-radius:34px;
+  padding:50px;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.privacy-box h2{
+  font-size:44px;
+  margin-bottom:20px;
+}
+
+.privacy-box h3{
+  margin-top:35px;
+  margin-bottom:12px;
+  color:#38bdf8;
+}
+
+.privacy-box p,
+.privacy-box li{
+  color:#cbd5e1;
+  line-height:2;
+}
+
+.privacy-box ul{
+  padding-left:20px;
+}
+
+/* ================= CONTACT ================= */
+
+.contact{
+  padding:90px 0;
+}
+
+.contact-box{
+  text-align:center;
+  background:linear-gradient(180deg,#121b2e,#0d1423);
+  border-radius:34px;
+  padding:55px;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.contact-box h2{
+  font-size:46px;
+  margin-bottom:15px;
+}
+
+.contact-box p{
+  color:#94a3b8;
+  margin-bottom:30px;
+}
+
+.contact-btn{
+  display:inline-block;
+  padding:18px 32px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#2563eb,#06b6d4);
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  box-shadow:0 15px 30px rgba(37,99,235,.35);
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  padding:35px 0;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,.05);
+  color:#94a3b8;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:920px){
+
+.hero-grid{
+  grid-template-columns:1fr;
+}
+
+.hero h1{
+  font-size:46px;
+}
+
+.menu{
+  gap:18px;
+}
+
+.menu a{
+  font-size:14px;
+}
+
+.section-title h2,
+.about-box h2,
+.privacy-box h2,
+.contact-box h2{
+  font-size:34px;
+}
+
+.about-box,
+.privacy-box,
+.contact-box{
+  padding:30px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container navbar">
+
+<div class="logo">
+Hyper<span>liquid</span>
+</div>
+
+<div class="menu">
+<a href="#home">Home</a>
+<a href="#privacy">Privacy Policy</a>
+<a href="#contact">Contact</a>
+</div>
+
+</div>
+
+</header>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+<div class="container hero-grid">
+
+<div>
+
+<h1>
+Modern Browser
+<span>Productivity Toolkit</span>
+</h1>
+
+<p>
+Hyperliquid is a modern productivity extension designed for students, writers, developers, creators, and professionals who want fast and lightweight browser tools in one place.
+
+The extension provides smart utilities including instant notes, advanced clipboard management, secure password generation, QR code creation, and text formatting tools — all directly inside your browser.
+</p>
+
+<div class="hero-btns">
+
+<a href="#features" class="btn btn-primary">
+Explore Features
+</a>
+
+<a href="#privacy" class="btn btn-outline">
+Privacy Policy
+</a>
+
+</div>
+
+</div>
+
+<div class="dashboard">
+
+<div class="widget">
+<h3>📝 Instant Notes</h3>
+<p>
+Save and organize quick notes directly inside your browser with a lightweight and fast interface.
+</p>
+</div>
+
+<div class="widget">
+<h3>📋 Advanced Clipboard</h3>
+<p>
+Copy, paste, and manage clipboard content efficiently using smart productivity utilities.
+</p>
+</div>
+
+<div class="widget">
+<h3>🔐 Password Generator</h3>
+<p>
+Generate secure passwords instantly for websites, accounts, and professional use.
+</p>
+</div>
+
+<div class="widget">
+<h3>🔳 QR Generator</h3>
+<p>
+Create QR codes for links, text, and other content with one click.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features" id="features">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>Everything You Need</h2>
+
+<p>
+Hyperliquid combines useful browser utilities into one clean and modern Chrome extension designed to improve productivity and workflow.
+</p>
+
+</div>
+
+<div class="feature-grid">
+
+<div class="feature-card">
+
+<div class="icon">📝</div>
+
+<h3>Instant Notes</h3>
+
+<p>
+Quickly create, edit, and manage important notes directly inside your browser without switching tabs or applications.
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="icon">📋</div>
+
+<h3>Clipboard Tools</h3>
+
+<p>
+Copy and manage clipboard content faster with smooth one-click productivity actions and smart workflow support.
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="icon">🔐</div>
+
+<h3>Password Generator</h3>
+
+<p>
+Generate strong and secure passwords instantly for safer accounts and better online security.
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="icon">🔳</div>
+
+<h3>QR Code Generator</h3>
+
+<p>
+Generate QR codes for URLs, text, and other content directly inside your browser in seconds.
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="icon">🔠</div>
+
+<h3>Text Formatter</h3>
+
+<p>
+Convert text cases, remove extra spaces, and organize text content quickly using formatting utilities.
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="icon">⚡</div>
+
+<h3>Fast & Lightweight</h3>
+
+<p>
+Optimized for speed and performance with a lightweight modern interface designed for smooth browsing.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about">
+
+<div class="container">
+
+<div class="about-box">
+
+<h2>Why Hyperliquid?</h2>
+
+<p>
+Hyperliquid was built to simplify everyday productivity tasks inside the browser. Instead of installing multiple browser extensions for notes, clipboard management, QR generation, or password creation, Hyperliquid combines everything into one modern lightweight workspace.
+
+The extension focuses on performance, simplicity, privacy, and ease of use while maintaining a clean and responsive experience for all users.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= PRIVACY POLICY ================= -->
+
+<section class="privacy" id="privacy">
+
+<div class="container">
+
+<div class="privacy-box">
+
+<h2>Privacy Policy</h2>
+
+<p>
+Effective Date: May 26, 2026
+</p>
+
+<h3>Overview</h3>
+
+<p>
+Hyperliquid respects user privacy and is designed to operate with minimal permissions and without collecting personal information. The extension provides browser-based productivity tools directly inside the browser and does not sell, share, or transmit sensitive user data.
+</p>
+
+<h3>Information Collection</h3>
+
+<p>
+Hyperliquid does not collect, store, or transmit:
+</p>
+
+<ul>
+
+<li>Personally identifiable information</li>
+
+<li>Passwords or account credentials</li>
+
+<li>Browsing history or browsing activity</li>
+
+<li>Website content or keystrokes</li>
+
+<li>Advertising identifiers or analytics data</li>
+
+<li>Clipboard content outside user interaction</li>
+
+</ul>
+
+<h3>Permissions & Usage</h3>
+
+<p>
+The extension may request limited browser permissions only for functionality required by specific tools.
+</p>
+
+<ul>
+
+<li>
+<strong>storage</strong> — Used to save notes and preferences locally inside the browser.
+</li>
+
+<li>
+<strong>clipboardRead / clipboardWrite</strong> — Required for clipboard copy and paste functionality.
+</li>
+
+<li>
+<strong>https://firestore.googleapis.com/*</strong> — Used to fetch a small read-only Firebase configuration value for extension behavior control.
+</li>
+
+</ul>
+
+<h3>Remote Configuration</h3>
+
+<p>
+Hyperliquid may use a secure Firebase-hosted configuration file to control extension behavior such as displaying tools or loading approved pages. The configuration is read-only and does not execute remote scripts or collect user information.
+</p>
+
+<h3>Third-Party Services</h3>
+
+<p>
+The extension may occasionally use trusted external services required for features such as QR code generation. These services are used only to provide requested functionality.
+</p>
+
+<h3>Data Security</h3>
+
+<p>
+All productivity tools are designed to operate locally within the browser environment. Hyperliquid does not maintain servers for storing user-generated content or personal information.
+</p>
+
+<h3>Contact</h3>
+
+<p>
+If you have questions regarding this Privacy Policy or extension functionality, please contact:
+</p>
+
+<p style="margin-top:18px;">
+<strong>Hyperliquid Support</strong><br>
+hyperliquidds@gmail.com
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= CONTACT ================= -->
+
+<section class="contact" id="contact">
+
+<div class="container">
+
+<div class="contact-box">
+
+<h2>Contact</h2>
+
+<p>
+For support, feedback, or business inquiries regarding Hyperliquid.
+</p>
+
+<a href="mailto:hyperliquidds@gmail.com"
+class="contact-btn">
+
+hyperliquidds@gmail.com
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+© 2026 Hyperliquid. All rights reserved.
+
+</div>
+
+</footer>
+
+</body>
+</html>
